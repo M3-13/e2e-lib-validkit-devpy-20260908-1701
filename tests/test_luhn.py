@@ -7,10 +7,13 @@ from validkit import luhn_check
     "digits",
     [
         "79927398713",
+        "4111111111111111",
+        "4242424242424242",
+        "5555555555554444",
+        "4532 0148 1655 3929",
         "4111 1111 1111 1111",
         "4111-1111-1111-1111",
         "4000 0566 5566 5556",
-        "4532014816553929",
         42,
         79927398713,
     ],
@@ -23,7 +26,8 @@ def test_luhn_check_accepts_valid_digit_sequences(digits):
     "digits",
     [
         "79927398714",
-        "4532014816553922",
+        "4532 0148 1655 3922",
+        "4532 0148 1655 3921",
         "4111 1111 1111 1112",
         "7",
         "1",
@@ -39,16 +43,6 @@ def test_luhn_check_accepts_all_zeroes():
 
 def test_luhn_check_single_zero():
     assert luhn_check("0") is True
-
-
-def test_luhn_check_ticket_example_is_not_luhn_valid():
-    # '4532 0148 1655 3921' is cited in the ticket as valid, but it is NOT
-    # Luhn-valid: the weighted sum is 72 (72 % 10 == 2). The correct check
-    # digit for the prefix 453201481655392 is 9, so the valid number is
-    # '4532 0148 1655 3929' and both cited strings fail the mod-10 check.
-    assert luhn_check("4532 0148 1655 3921") is False
-    assert luhn_check("4532 0148 1655 3922") is False
-    assert luhn_check("4532 0148 1655 3929") is True
 
 
 @pytest.mark.parametrize(
