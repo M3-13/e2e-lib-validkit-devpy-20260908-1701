@@ -41,6 +41,16 @@ def test_luhn_check_single_zero():
     assert luhn_check("0") is True
 
 
+def test_luhn_check_ticket_example_is_not_luhn_valid():
+    # '4532 0148 1655 3921' is cited in the ticket as valid, but it is NOT
+    # Luhn-valid: the weighted sum is 72 (72 % 10 == 2). The correct check
+    # digit for the prefix 453201481655392 is 9, so the valid number is
+    # '4532 0148 1655 3929' and both cited strings fail the mod-10 check.
+    assert luhn_check("4532 0148 1655 3921") is False
+    assert luhn_check("4532 0148 1655 3922") is False
+    assert luhn_check("4532 0148 1655 3929") is True
+
+
 @pytest.mark.parametrize(
     "digits",
     [
